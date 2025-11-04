@@ -1,0 +1,62 @@
+# --- Security framework & LSMs ---
+CONFIG_SECURITY=n
+CONFIG_SECURITYFS=n
+CONFIG_SECCOMP=n
+CONFIG_SECCOMP_FILTER=n
+CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT=n
+# If your tree supports CONFIG_LSM (string list), clear it:
+CONFIG_LSM=""
+
+# Popular LSMs
+CONFIG_APPARMOR=n
+CONFIG_TOMOYO=n
+CONFIG_SMACK=n
+CONFIG_SELINUX=n
+CONFIG_YAMA=n
+CONFIG_BPF_LSM=n
+
+# Integrity frameworks
+CONFIG_INTEGRITY=n
+CONFIG_IMA=n
+CONFIG_EVM=n
+
+# --- Crypto API (top level) ---
+# Note: Setting this off may be re-enabled by drivers that `select` crypto.
+# We'll enforce it again after merge with scripts/config (see method #2).
+# If your Kconfig allows, this line is enough:
+# CONFIG_CRYPTO is not set
+
+# --- Disable treating warnings as errors ---
+CONFIG_WERROR=n
+
+# Optional: relax the frame size warning threshold
+CONFIG_FRAME_WARN=4096
+
+# --- Turn off kernel trusted keyrings / external certs ---
+CONFIG_SYSTEM_TRUSTED_KEYS=""
+CONFIG_SYSTEM_REVOCATION_KEYS=""
+
+# If present in this tree, also make sure these are off:
+CONFIG_SYSTEM_BLACKLIST_KEYRING=n
+CONFIG_SECONDARY_TRUSTED_KEYRING=n
+
+# --- Disable module signing (avoids needing a signing key) ---
+CONFIG_MODULE_SIG=n
+# If you prefer to keep module signing, comment the line above and instead set:
+# CONFIG_MODULE_SIG=y
+# CONFIG_MODULE_SIG_ALL=n
+# CONFIG_MODULE_SIG_SHA256=y
+# CONFIG_MODULE_SIG_KEY="certs/signing_key.pem"
+# (The build will auto-generate a throwaway key at that path if missing.)
+
+# --- Turn off BTF (avoids resolve_btfids/pahole entirely) ---
+CONFIG_DEBUG_INFO_BTF=n
+CONFIG_DEBUG_INFO_BTF_MODULES=n
+# Keep classic DWARF (optional but sensible)
+CONFIG_DEBUG_INFO_DWARF4=y
+
+# No DWARF/BTF debug info → no -dbg .deb
+CONFIG_DEBUG_INFO=n
+CONFIG_DEBUG_INFO_BTF=n
+CONFIG_DEBUG_INFO_BTF_MODULES=n
+
